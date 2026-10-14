@@ -1,0 +1,15 @@
+# Niro EV vehicle workspace
+#   vcs import --recursive src < repos/niro_ev.repos
+repositories:
+  vehicle_can_common:
+    type: git
+    url: https://github.com/junhyeok797/vehicle_can_common.git
+    version: main
+  niro_ev_interface:
+    type: git
+    url: https://github.com/junhyeok797/niro_ev_interface.git
+    version: main
+  dbcppp:
+    type: git
+    url: https://github.com/xR3b0rn/dbcppp.git
+    version: v3.2.6

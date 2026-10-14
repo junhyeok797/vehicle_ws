@@ -1,0 +1,7 @@
+{
+  "names": {
+    "libdbcppp": {
+      "cmake-args": ["-Dbuild_tests=OFF", "-Dbuild_examples=OFF"]
+    }
+  }
+}

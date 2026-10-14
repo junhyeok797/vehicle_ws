@@ -1,0 +1,11 @@
+# colcon workspace (src/ is populated by `vcs import`)
+src/
+build/
+install/
+log/
+
+# editor / OS
+.vscode/
+.idea/
+*.swp
+__pycache__/
