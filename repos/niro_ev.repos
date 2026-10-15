@@ -1,5 +1,5 @@
 # Niro EV vehicle workspace
-#   vcs import --recursive src < repos/niro_ev.repos
+#   mkdir -p src && vcs import --recursive src < repos/niro_ev.repos
 repositories:
   vehicle_can_common:
     type: git
