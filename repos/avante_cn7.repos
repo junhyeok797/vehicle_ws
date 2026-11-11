@@ -1,0 +1,12 @@
+# Avante CN7 vehicle workspace (ROS 1 noetic, ros1-noetic branches)
+#   mkdir -p src && vcs import --recursive src < repos/avante_cn7.repos
+# dbcppp is not listed: catkin cannot build it, scripts/install_deps.sh installs it.
+repositories:
+  vehicle_can_common:
+    type: git
+    url: https://github.com/junhyeok797/vehicle_can_common.git
+    version: ros1-noetic
+  avante_cn7_interface:
+    type: git
+    url: https://github.com/junhyeok797/avante_cn7_interface.git
+    version: ros1-noetic

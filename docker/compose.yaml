@@ -1,0 +1,58 @@
+# @copyright Chungbuk National University, Autonomous Vehicle Laboratory, 2026. All rights reserved.
+#            Subject to limited distribution and restricted disclosure only.
+#
+# @file      compose.yaml
+# @brief     vehicle_ws dev container: NVIDIA GPU, X11 display, SocketCAN and workspace mount
+#
+# @date      2026-11-10 created by Junhyeok Seo (jun2342@chungbuk.ac.kr)
+#
+# Usage (from the workspace root):
+#   xhost +local:                                   # once per login, for rviz/rqt windows
+#   HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose -f docker/compose.yaml up -d --build
+#   docker compose -f docker/compose.yaml exec dev bash
+#   docker compose -f docker/compose.yaml down
+#
+# Optional environment:
+#   HOST_UID / HOST_GID   image user ids (default 1000), match the host user
+#   BUILD_JOBS            parallel compile jobs during the image build (default 4, limits RAM)
+#   MEM_LIMIT             container RAM cap (default 16g): a runaway build is OOM-killed
+#                         instead of freezing the host
+#   CAN_LOG_DIR           host folder with candump logs, mounted at ~/can_logs (default ../can_logs)
+#
+# Needs the NVIDIA Container Toolkit on the host.
+
+name: vehicle_ws_noetic
+
+services:
+  dev:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        USER_UID: ${HOST_UID:-1000}
+        USER_GID: ${HOST_GID:-1000}
+        BUILD_JOBS: ${BUILD_JOBS:-4}
+    image: vehicle_ws:noetic
+    container_name: vehicle_ws_noetic
+    command: sleep infinity
+    # tini as PID 1 reaps processes started with `docker exec -d` (else they stay <defunct>)
+    init: true
+    # SocketCAN interfaces live in the host network namespace; ROS master/nodes on the host too.
+    network_mode: host
+    ipc: host
+    # ip link / modprobe for can0 and vcan0, and USB-CAN devices under /dev
+    privileged: true
+    gpus: all
+    mem_limit: ${MEM_LIMIT:-16g}
+    memswap_limit: ${MEM_LIMIT:-16g}
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    volumes:
+      - ..:/home/user/vehicle_ws
+      - ${CAN_LOG_DIR:-../can_logs}:/home/user/can_logs
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /dev:/dev
+      - /lib/modules:/lib/modules:ro
+      - /etc/localtime:/etc/localtime:ro

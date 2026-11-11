@@ -1,0 +1,4 @@
+# Build context is the workspace root; the image only needs scripts/ and requirements.txt.
+*
+!scripts/install_deps.sh
+!requirements.txt

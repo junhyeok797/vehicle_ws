@@ -1,0 +1,18 @@
+# @copyright Chungbuk National University, Autonomous Vehicle Laboratory, 2026. All rights reserved.
+#            Subject to limited distribution and restricted disclosure only.
+#
+# @file      requirements.txt
+# @brief     pip packages for vehicle_ws that focal apt does not ship (Python 3.8)
+#
+# @date      2026-11-10 created by Junhyeok Seo (jun2342@chungbuk.ac.kr)
+#
+# Installed by scripts/install_deps.sh. Versions are the newest that support Python 3.8.
+
+# vehicle_can_web
+fastapi==0.124.4
+uvicorn==0.33.0
+# WebSocket support for uvicorn
+wsproto==1.2.0
+
+# vehicle_can_web tests (starlette TestClient)
+httpx==0.28.1

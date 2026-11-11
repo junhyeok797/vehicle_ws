@@ -1,11 +1,17 @@
-# colcon workspace (src/ is populated by `vcs import`)
+# catkin workspace (src/ is populated by `vcs import`)
 src/
 build/
+devel/
 install/
-log/
+logs/
+can_logs/
+.catkin_tools/
 
 # editor / OS
 .vscode/
 .idea/
 *.swp
 __pycache__/
+
+# session handoff notes (temporary, not for git)
+.handoff/
